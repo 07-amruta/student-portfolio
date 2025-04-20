@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
+import RoboticPopup from "../components/ui/RoboticPopup";
 import {
   FaCode,
   FaMicrochip,
@@ -47,8 +48,13 @@ const ProjectCard = ({ img, title, desc, delay = 0 }: ProjectCardProps) => (
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay }}
     viewport={{ once: true }}
+    whileHover={{
+      scale: 1.05,
+      boxShadow: "0 0 25px rgba(255, 127, 80, 0.5)",
+    }}
+    className="transition-transform duration-300"
   >
-    <Card className="transition-transform duration-300 hover:scale-105 hover:shadow-xl bg-background/80 backdrop-blur-md border border-border/30 dark:bg-black dark:border-turquoise-500">
+    <Card className="bg-background/80 backdrop-blur-md border border-border/30 dark:bg-black dark:border-turquoise-500">
       <CardContent className="p-6 flex flex-col items-center text-center dark:text-turquoise-200">
         {img && (
           <img
@@ -67,6 +73,7 @@ const ProjectCard = ({ img, title, desc, delay = 0 }: ProjectCardProps) => (
 export default function Portfolio() {
   const controls = useAnimation();
   const [darkMode, setDarkMode] = useState(false);
+  const [showCat, setShowCat] = useState(false);
 
   useEffect(() => {
     controls.start({ opacity: 1, y: 0, transition: { duration: 0.6 } });
@@ -101,30 +108,24 @@ export default function Portfolio() {
 
   return (
     <div
-      className={`min-h-screen scroll-smooth transition-colors duration-500 font-sans ${
+      className={`min-h-screen font-sans transition-colors duration-500 relative z-0 overflow-hidden ${
         darkMode
           ? "bg-black text-turquoise-200"
           : "bg-gradient-to-br from-[#edf1f3] to-[#e0e7ec] text-gray-800"
       }`}
     >
-      {/* NAVBAR */}
-      <nav
-        className={`py-4 px-6 sticky top-0 z-50 flex justify-between items-center shadow-md ${
-          darkMode
-            ? "bg-black border-b border-coral-400"
-            : "bg-white border-b border-teal-400"
-        }`}
-      >
+      <RoboticPopup />
+      <nav className={`py-4 px-6 sticky top-0 z-50 flex justify-between items-center shadow-md ${
+        darkMode ? "bg-black border-b border-coral-400" : "bg-white border-b border-teal-400"
+      }`}>
         <h1 className="text-xl font-extrabold tracking-wider">Amruta Panda</h1>
         <ul className="hidden md:flex space-x-6 text-sm font-medium">
           {["About", "My Journey", "Skills", "Projects", "Contact"].map((section) => (
             <li key={section}>
               <a
-                href={`#${section.toLowerCase()}`}
+                href={`#${section.toLowerCase().replace(/ /g, "")}`}
                 className={`transition-colors duration-300 ${
-                  darkMode
-                    ? "text-gray-300 hover:text-coral-400"
-                    : "text-gray-500 hover:text-teal-600"
+                  darkMode ? "text-gray-300 hover:text-coral-400" : "text-gray-500 hover:text-teal-600"
                 }`}
               >
                 {section}
@@ -132,13 +133,15 @@ export default function Portfolio() {
             </li>
           ))}
         </ul>
-        <Button
-          variant="outline"
-          className="text-xs px-3 py-1 rounded-md border"
-          onClick={() => setDarkMode(!darkMode)}
-        >
-          {darkMode ? "☀️ Light" : "🌙 Dark"}
-        </Button>
+        <div className="flex gap-2 items-center">
+          <Button
+            variant="outline"
+            className="text-xs px-3 py-1 rounded-md border"
+            onClick={() => setDarkMode(!darkMode)}
+          >
+            {darkMode ? "☀️ Light" : "🌙 Dark"}
+          </Button>
+        </div>
       </nav>
 
       {/* ABOUT SECTION */}
@@ -306,9 +309,9 @@ export default function Portfolio() {
         id="projects"
         className={`py-20 px-6 md:px-20 ${
           darkMode
-            ? "bg-gradient-to-b from-transparent to-black"
+            ? "bg-gradient-to-br from-transparent to-[#cde9eb]" 
             : "bg-gradient-to-b from-transparent to-[#d6f4f4]"
-        }`}
+        }`}        
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
