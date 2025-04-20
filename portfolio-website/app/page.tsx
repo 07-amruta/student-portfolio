@@ -17,63 +17,9 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 
-type ResumeContentProps = {
-  title: string;
-  items: string[];
-};
-
-const ResumeContent = ({ title, items }: ResumeContentProps) => (
-  <div className="space-y-3">
-    <h3 className="text-lg font-semibold underline underline-offset-4 mb-2">
-      {title}
-    </h3>
-    <ul className="space-y-2">
-      {items.map((item, index) => (
-        <li key={index}>{item}</li>
-      ))}
-    </ul>
-  </div>
-);
-
-type ProjectCardProps = {
-  img: string;
-  title: string;
-  desc: string;
-  delay?: number;
-};
-
-const ProjectCard = ({ img, title, desc, delay = 0 }: ProjectCardProps) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay }}
-    viewport={{ once: true }}
-    whileHover={{
-      scale: 1.05,
-      boxShadow: "0 0 25px rgba(255, 127, 80, 0.5)",
-    }}
-    className="transition-transform duration-300"
-  >
-    <Card className="bg-background/80 backdrop-blur-md border border-border/30 dark:bg-black dark:border-turquoise-500">
-      <CardContent className="p-6 flex flex-col items-center text-center dark:text-turquoise-200">
-        {img && (
-          <img
-            src={img}
-            alt={title}
-            className="rounded-full mb-4 h-40 w-40 object-cover border-4 border-turquoise-400 dark:border-coral-400 shadow-md"
-          />
-        )}
-        <h3 className="text-lg font-semibold mb-1">{title}</h3>
-        <p className="text-sm dark:text-turquoise-200">{desc}</p>
-      </CardContent>
-    </Card>
-  </motion.div>
-);
-
 export default function Portfolio() {
   const controls = useAnimation();
   const [darkMode, setDarkMode] = useState(false);
-  const [showCat, setShowCat] = useState(false);
 
   useEffect(() => {
     controls.start({ opacity: 1, y: 0, transition: { duration: 0.6 } });
@@ -309,7 +255,7 @@ export default function Portfolio() {
         id="projects"
         className={`py-20 px-6 md:px-20 ${
           darkMode
-            ? "bg-gradient-to-br from-transparent to-[#cde9eb]" 
+            ? "bg-gradient-to-br from-transparent to-[#cde9eb]"
             : "bg-gradient-to-b from-transparent to-[#d6f4f4]"
         }`}        
         initial={{ opacity: 0, y: 50 }}
